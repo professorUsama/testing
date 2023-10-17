@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import passwordValidation from "../../utils/passwordValidation.js";
 import checkEmptyFields from "../../utils/checkEmptyFields.js";
 import asyncErrorHandler from "express-async-handler";
+import { EMAIL_REGEX, NAME_REGEX, PHONE_NUMBER_REGEX } from "../../constants/regex.js";
 
 const signUp = asyncErrorHandler(async (req, res, next) => {
   const {
@@ -23,15 +24,30 @@ const signUp = asyncErrorHandler(async (req, res, next) => {
 
   if (passwordValidation.length(password) !== true) {
     res.status(400);
-    throw new Error("password must be at least 9 characters...", {cause: "validation error"});
+    throw new Error(`${passwordValidation.length(password).error}`, {cause: "validation error"});
   }
   if (passwordValidation.match(password, confirmPassword) !== true) {
     res.status(400);
-    throw new Error("your password did'nt match...", {cause: "validation error"});
+    throw new Error(`${passwordValidation.match(password, confirmPassword).error}`, {cause: "validation error"});
   }
   if (passwordValidation.strength(password) !== true) {
     res.status(400);
-    throw new Error("entered password is too weak...", {cause: "validation error"});
+    throw new Error(`${passwordValidation.strength(password).error}`, {cause: "validation error"});
+  }
+
+  if(!email.match(EMAIL_REGEX)){
+    res.status(400);
+    throw new Error("Please enter valid email", {cause: "Validation error"});
+  }
+
+  if(!phone.match(PHONE_NUMBER_REGEX)){
+    res.status(400);
+    throw new Error("Please enter valid phone number", {cause: "validation error"});
+  }
+
+  if(!firstName.match(NAME_REGEX) || !lastName.match(NAME_REGEX)){
+    res.status(400);
+    throw new Error("Please enter the valid name", {cause: "validation error"});
   }
   // generate hash password
 
