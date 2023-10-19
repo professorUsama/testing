@@ -1,6 +1,7 @@
 import { Users } from "../../models/usersSchema.js";
 import asyncErrorHandler from "express-async-handler";
 const verifyEmail = asyncErrorHandler(async (req, res) => {
+  console.log(req.user);
   const db = req.user;
   const { otp } = req.body;
   if (!otp) {
@@ -41,7 +42,7 @@ const verifyEmail = asyncErrorHandler(async (req, res) => {
       cause: "authentication failed",
     });
   }
-  res.status(200).json("email verification sucessfull");
+  return res.status(200).json("email verification sucessfull");
 });
 
 export default verifyEmail;

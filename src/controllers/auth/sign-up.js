@@ -10,7 +10,6 @@ import {
 import { Users } from "../../models/usersSchema.js";
 import generateUserOtp from "../../utils/otpGenerator.js";
 import sendEmail from "../../config/sendOtpToEmail.js";
-import verifyEmail from "./verifyEmailOtp.js";
 
 const signUp = asyncErrorHandler(async (req, res, next) => {
   const {
