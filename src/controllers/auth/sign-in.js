@@ -7,8 +7,6 @@ import generateUserOtp from "../../utils/otpGenerator.js";
 import sendEmail from "../../config/sendOtpToEmail.js";
 import verifyEmail from "./verifyEmailOtp.js";
 const signIn = asyncErrorHandler(async (req, res) => {
-  const { email, password } = req.body;
-
   if (!checkEmptyFields(req.body)) {
     res.status(400);
     throw new Error("all fields are mandatory", { cause: "empty fields" });
@@ -33,6 +31,7 @@ const signIn = asyncErrorHandler(async (req, res) => {
   //     },
   //   ]);
   const user = await Users.findOne({ email: email });
+  // console.log(user);
   if (!user) {
     res.status(400);
     throw new Error("According to the email, you are not registered", {
