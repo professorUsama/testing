@@ -32,6 +32,7 @@ const resendEmailOtp = asyncErrorHandler(async (req, res) => {
     }
   );
   const message = await sendEmail(db.email, otp.toString());
+  console.log(message);
   if(message?.Response.statusCode == 202){
     console.log("email sent successfully...");
   }
